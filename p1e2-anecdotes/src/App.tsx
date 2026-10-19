@@ -15,6 +15,8 @@ const App = () => {
   ];
 
   const [selected, setSelected] = useState(0);
+  const [votes, setVotes] = useState(Array.from(anecdotes, () => 0));
+  const [featuredIndex, setFeaturedIndex] = useState<number | null>(null);
 
   function getRandomIntExclusive(min: number, max: number) {
     const minCeiled = Math.ceil(min);
@@ -34,13 +36,49 @@ const App = () => {
     setSelected(newSelection);
   }
 
+  function addVote() {
+    const newVotes = [...votes];
+    ++newVotes[selected];
+    setVotes(newVotes);
+
+    updateFeaturedVote();
+  }
+
+  function updateFeaturedVote() {
+    const highestValue = Math.max(...votes);
+    setFeaturedIndex(votes.indexOf(highestValue));
+  }
+
   return (
     <div className="anecdote__container">
       <p className="anecdote">{anecdotes[selected]}</p>
+      <p className="anecdote">Votes: {votes[selected]}</p>
 
-      <button onClick={getRandomAnecdote}>Next anecdote</button>
+      <div className="controls">
+        <button onClick={addVote}>Vote</button>
+        <button onClick={getRandomAnecdote}>Next anecdote</button>
+      </div>
+
+      {featuredIndex !== null ? (
+        <FeaturedContainer featured={anecdotes[featuredIndex]} />
+      ) : (
+        <p>There are no featured posts right now.</p>
+      )}
     </div>
   );
 };
+
+type FeaturedContainerProps = {
+  featured: string;
+};
+
+function FeaturedContainer({ featured }: FeaturedContainerProps) {
+  return (
+    <div className="featured">
+      <h2>Featured Anecdote</h2>
+      <p>{featured}</p>
+    </div>
+  );
+}
 
 export default App;

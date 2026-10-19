@@ -1,8 +1,10 @@
 .anecdote__container {
   display: flex;
   flex-direction: column;
+  width: 25%;
 
   & .anecdote {
+    display: flex;
     user-select: none;
     min-height: 20ch;
     line-height: 1;
