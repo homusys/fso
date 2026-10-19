@@ -8,10 +8,19 @@ type CountState = {
   goodCount: number;
   neutralCount: number;
   badCount: number;
+  average: number;
+  positive: number;
 };
+
+const initialCountState = {
+  goodCount: 0,
+  badCount: 0,
+  neutralCount: 0,
+} as CountState;
 
 function counterReducer(state: CountState, { type }: CounterAction) {
   let tempCountHold = 0;
+  let result = null;
   switch (type) {
     case "addGood":
       tempCountHold = state.goodCount;
@@ -34,11 +43,7 @@ function counterReducer(state: CountState, { type }: CounterAction) {
 }
 
 export default function App() {
-  const [counts, dispatch] = useReducer(counterReducer, {
-    goodCount: 0,
-    neutralCount: 0,
-    badCount: 0,
-  });
+  const [counts, dispatch] = useReducer(counterReducer, initialCountState);
 
   return (
     <div className="app">
@@ -72,6 +77,33 @@ type StatisticsSectionProps = {
 };
 
 function StatisticsSection({ counts }: StatisticsSectionProps) {
+  function getAll() {
+    let totalCount = counts.goodCount + counts.neutralCount + counts.badCount;
+
+    return totalCount;
+  }
+
+  function getAverage(total: number, counts: CountState) {
+    if (!total) {
+      return 0;
+    }
+
+    const { goodCount, badCount } = counts;
+
+    let totalGood = goodCount * 1;
+    let totalBad = badCount > 0 ? badCount * -1 : 0;
+
+    return (totalGood + totalBad) / total;
+  }
+
+  function getPositive(total: number, goodCount: number) {
+    if (!total) {
+      return 0;
+    }
+
+    return (goodCount / total) * 100;
+  }
+
   return (
     <section>
       <h1>Statistics</h1>
@@ -88,6 +120,20 @@ function StatisticsSection({ counts }: StatisticsSectionProps) {
           <tr>
             <td>Bad</td>
             <td className="amount">{counts.badCount}</td>
+          </tr>
+          <tr>
+            <td>all: </td>
+            <td className="amount">{getAll()}</td>
+          </tr>
+          <tr>
+            <td>Average: </td>
+            <td className="amount">{getAverage(getAll(), counts)}</td>
+          </tr>
+          <tr>
+            <td>Positive: </td>
+            <td className="amount">
+              {getPositive(getAll(), counts.goodCount)} %
+            </td>
           </tr>
         </tbody>
       </table>
