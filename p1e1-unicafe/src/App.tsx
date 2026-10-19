@@ -105,36 +105,39 @@ function StatisticsSection({ counts }: StatisticsSectionProps) {
   return (
     <section>
       <h1>Statistics</h1>
-      <table>
-        <tbody>
-          <tr>
-            <td>Good</td>
-            <td className="amount">{counts.goodCount}</td>
-          </tr>
-          <tr>
-            <td>Neutral</td>
-            <td className="amount">{counts.neutralCount}</td>
-          </tr>
-          <tr>
-            <td>Bad</td>
-            <td className="amount">{counts.badCount}</td>
-          </tr>
-          <tr>
-            <td>all: </td>
-            <td className="amount">{getAll()}</td>
-          </tr>
-          <tr>
-            <td>Average: </td>
-            <td className="amount">{getAverage(getAll(), counts)}</td>
-          </tr>
-          <tr>
-            <td>Positive: </td>
-            <td className="amount">
-              {getPositive(getAll(), counts.goodCount)} %
-            </td>
-          </tr>
-        </tbody>
-      </table>
+      {!Object.is(counts, initialCountState) && (
+        <table>
+          <tbody>
+            <tr>
+              <td>Good</td>
+              <td className="amount">{counts.goodCount}</td>
+            </tr>
+            <tr>
+              <td>Neutral</td>
+              <td className="amount">{counts.neutralCount}</td>
+            </tr>
+            <tr>
+              <td>Bad</td>
+              <td className="amount">{counts.badCount}</td>
+            </tr>
+            <tr>
+              <td>all: </td>
+              <td className="amount">{getAll()}</td>
+            </tr>
+            <tr>
+              <td>Average: </td>
+              <td className="amount">{getAverage(getAll(), counts)}</td>
+            </tr>
+            <tr>
+              <td>Positive: </td>
+              <td className="amount">
+                {getPositive(getAll(), counts.goodCount)} %
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      )}
+      {Object.is(counts, initialCountState) && <p>No feedback given</p>}
     </section>
   );
 }
