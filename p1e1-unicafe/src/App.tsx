@@ -8,8 +8,6 @@ type CountState = {
   goodCount: number;
   neutralCount: number;
   badCount: number;
-  average: number;
-  positive: number;
 };
 
 const initialCountState = {
@@ -20,7 +18,7 @@ const initialCountState = {
 
 function counterReducer(state: CountState, { type }: CounterAction) {
   let tempCountHold = 0;
-  let result = null;
+
   switch (type) {
     case "addGood":
       tempCountHold = state.goodCount;
