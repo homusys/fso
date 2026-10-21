@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
 import type { PersonDetails } from "./utils/types";
 import PersonForm from "./components/person_form";
@@ -12,6 +13,17 @@ export default function App() {
   const [personsFiltered, setPersonsFiltered] = useState<PersonDetails[]>([
     ...persons,
   ]);
+
+  useEffect(() => {
+    axios
+      .get<PersonDetails[]>("http://localhost:3000/persons")
+      .then((res) => res.data)
+      .then((allPersons) => {
+        console.log(allPersons);
+        setPersons(allPersons);
+        setPersonsFiltered(allPersons);
+      });
+  }, []);
 
   return (
     <main>
