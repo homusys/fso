@@ -16,15 +16,13 @@ export default function PersonDisplay({
   return (
     <ul className="person__display">
       {personsToDisplay.map((person, _) => (
-        <>
-          <li key={person.id}>
-            {person.name} --- {person.phone}
-          </li>
+        <li key={person.id}>
+          {person.name} --- {person.phone}
           <button className="edit">edit</button>
           <button className="delete" onClick={() => deleteOnClick(person.id)}>
             delete
           </button>
-        </>
+        </li>
       ))}
     </ul>
   );

@@ -21,7 +21,6 @@ export default function App() {
       .get<PersonDetails[]>("http://localhost:3000/persons")
       .then((res) => res.data)
       .then((allPersons) => {
-        console.log(allPersons);
         setPersons(allPersons);
         setPersonsFiltered(allPersons);
       });
