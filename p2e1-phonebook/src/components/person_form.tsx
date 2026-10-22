@@ -1,41 +1,20 @@
-import { nanoid } from "nanoid";
 import { useState } from "react";
 
-import type { PersonDetails } from "../utils/types";
-
 type PersonFormProp = {
-  persons: PersonDetails[];
-  setPersons: React.Dispatch<React.SetStateAction<PersonDetails[]>>;
+  handleFormSubmit: (newName: string, newNumber: string) => void;
 };
 
-export default function PersonForm({ persons, setPersons }: PersonFormProp) {
+export default function PersonForm({ handleFormSubmit }: PersonFormProp) {
   const [newName, setNewName] = useState("");
   const [newNumber, setNewNumber] = useState("");
 
-  function handleFormSubmit(e: React.SubmitEvent) {
-    e.preventDefault();
-
-    if (newName.trim() === "" || newNumber.trim() === "") {
-      alert("Input fields should not be blank.");
-      return;
-    }
-
-    const newPerson = {
-      id: nanoid(),
-      name: newName.trim(),
-      phone: newNumber.trim(),
-    } as PersonDetails;
-
-    if (persons.find((person) => person.name === newPerson.name)) {
-      alert(`${newPerson.name} is already added to phonebook`);
-      return;
-    }
-
-    setPersons([...persons, newPerson]);
-  }
-
   return (
-    <form onSubmit={handleFormSubmit}>
+    <form
+      onSubmit={(event: React.SubmitEvent) => {
+        event.preventDefault();
+        handleFormSubmit(newName, newNumber);
+      }}
+    >
       <label htmlFor="name">
         Name:
         <input
