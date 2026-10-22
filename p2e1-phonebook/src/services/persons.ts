@@ -15,8 +15,8 @@ function edit() {
 
 }
 
-function del() {
-
+async function del(id:string) {
+  return await axios.delete<PersonDetails>(`${baseUrl}/${id}`).then(res => {res.data});
 }
 
 

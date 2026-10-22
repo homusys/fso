@@ -51,6 +51,13 @@ export default function App() {
     });
   }
 
+  async function deletePerson(id: string) {
+    personService.del(id).then(() => {
+      setPersons(persons.filter((person) => person.id !== id));
+      setPersonsFiltered(persons.filter((person) => person.id !== id));
+    });
+  }
+
   return (
     <main>
       <h2>Phonebook</h2>
@@ -63,7 +70,10 @@ export default function App() {
       />
 
       <h2>List of numbers:</h2>
-      <PersonDisplay persons={persons} personsFiltered={personsFiltered} />
+      <PersonDisplay
+        personsToDisplay={!personsFiltered ? persons : personsFiltered}
+        handleOnDelete={deletePerson}
+      />
     </main>
   );
 }

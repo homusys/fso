@@ -1,27 +1,27 @@
 import type { PersonDetails } from "../utils/types";
 
 type PersonDisplayProps = {
-  persons: PersonDetails[];
-  personsFiltered: PersonDetails[];
+  personsToDisplay: PersonDetails[];
+  handleOnDelete: (id: string) => void;
 };
 
 export default function PersonDisplay({
-  persons,
-  personsFiltered,
+  personsToDisplay,
+  handleOnDelete,
 }: PersonDisplayProps) {
-  const currentPersonList = !personsFiltered ? persons : personsFiltered;
-
-  function handleOnDelete() {}
+  function deleteOnClick(id: string) {
+    handleOnDelete(id);
+  }
 
   return (
     <ul className="person__display">
-      {currentPersonList.map((person, _) => (
+      {personsToDisplay.map((person, _) => (
         <>
           <li key={person.id}>
             {person.name} --- {person.phone}
           </li>
           <button className="edit">edit</button>
-          <button className="delete" onClick={handleOnDelete}>
+          <button className="delete" onClick={() => deleteOnClick(person.id)}>
             delete
           </button>
         </>
