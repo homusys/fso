@@ -11,12 +11,12 @@ async function add(newPerson: PersonDetails) {
   return await axios.post<PersonDetails>(baseUrl, newPerson).then((response) => response.data)
 }
 
-function edit() {
-
+async function edit(newPerson: PersonDetails) {
+  return await axios.put<PersonDetails>(`${baseUrl}/${newPerson.id}`,newPerson).then(res => res.data);
 }
 
 async function del(id:string) {
-  return await axios.delete<PersonDetails>(`${baseUrl}/${id}`).then(res => {res.data});
+  return await axios.delete<PersonDetails>(`${baseUrl}/${id}`).then(res => res.data);
 }
 
 

@@ -57,6 +57,23 @@ export default function App() {
     });
   }
 
+  async function updatePerson(id: string, newName: string, newPhone: string) {
+    personService
+      .edit({ id, name: newName, phone: newPhone } as PersonDetails)
+      .then((newPerson) => {
+        setPersons(
+          persons.map((person) =>
+            person.id === newPerson.id ? newPerson : person,
+          ),
+        );
+        setPersonsFiltered(
+          persons.map((person) =>
+            person.id === newPerson.id ? newPerson : person,
+          ),
+        );
+      });
+  }
+
   return (
     <main>
       <h2>Phonebook</h2>
@@ -71,6 +88,7 @@ export default function App() {
       <h2>List of numbers:</h2>
       <PersonDisplay
         personsToDisplay={!personsFiltered ? persons : personsFiltered}
+        handleOnSave={updatePerson}
         handleOnDelete={deletePerson}
       />
     </main>
