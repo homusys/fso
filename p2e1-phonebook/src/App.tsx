@@ -18,7 +18,7 @@ export default function App() {
   useEffect(() => {
     personService.all().then;
     axios
-      .get<PersonDetails[]>("http://localhost:3000/persons")
+      .get<PersonDetails[]>("http://localhost:3000/api/persons")
       .then((res) => res.data)
       .then((allPersons) => {
         setPersons(allPersons);
@@ -34,7 +34,7 @@ export default function App() {
 
     const newPerson = {
       name: newName.trim(),
-      phone: newNumber.trim(),
+      number: newNumber.trim(),
     } as PersonDetails;
 
     if (persons.find((person) => person.name === newPerson.name)) {
@@ -59,7 +59,7 @@ export default function App() {
 
   async function updatePerson(id: string, newName: string, newPhone: string) {
     personService
-      .edit({ id, name: newName, phone: newPhone } as PersonDetails)
+      .edit({ id, name: newName, number: newPhone } as PersonDetails)
       .then((newPerson) => {
         setPersons(
           persons.map((person) =>

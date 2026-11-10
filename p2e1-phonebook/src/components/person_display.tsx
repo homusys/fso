@@ -46,11 +46,13 @@ function PersonDisplayItem({
   deleteOnClick,
 }: PersonDisplayItemProps) {
   const [name, setName] = useState(person.name);
-  const [phone, setPhone] = useState(person.phone);
+  const [phone, setPhone] = useState(person.number);
   const [editing, setEditing] = useState(false);
 
+  console.log(person);
+
   return (
-    <li key={person.id}>
+    <li>
       {!editing ? (
         <>
           {name} --- {phone}
